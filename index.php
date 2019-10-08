@@ -14,11 +14,25 @@
     use classes\router;
 
     $router = new router();
-
-    $router->info();
-
-    if($router->checkRouteValidity())
+    
+    if ($router->method_exists)
     {
-        $router->executeRoute();
+        $method = $router->method;
+
+        if ($router->class == "router")
+        {
+            $router->$method();
+        }
+        else
+        {
+            $router->instance->$method();
+        }
+    }
+    else
+    {
+        if (isset($router->instance) && method_exists($router->instance, "renderView"))
+        {
+            $router->instance->renderView();
+        }
     }
 ?>
