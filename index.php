@@ -15,10 +15,13 @@
 
     $router = new router();
     
+    // If a method is specified
     if ($router->method_exists)
     {
         $method = $router->method;
 
+        // If the class specified is router, execute the method on the router instance.
+        // Otherwise, execute it on the newly created instance of the class specified.
         if ($router->class == "router")
         {
             $router->$method();
@@ -28,9 +31,11 @@
             $router->instance->$method();
         }
     }
+    // If a method isn't specified
     else
     {
-        if (isset($router->instance) && method_exists($router->instance, "renderView"))
+        // If there is a class instantiated and it has a renderView method, render the view.
+        if ($router->instance_instantiated && method_exists($router->instance, "renderView"))
         {
             $router->instance->renderView();
         }

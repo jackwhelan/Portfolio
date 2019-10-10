@@ -5,7 +5,7 @@
     {
         var $class;
         var $method;
-        var $methodArg;
+        var $methodArgs;
         var $class_exists;
         var $method_exists;
         var $instance;
@@ -13,15 +13,24 @@
 
         function __construct()
         {
+            // URL is translated to:
+            // https://website.com/class/method/methodArgs/moreMethodArgs/evenMore/etc
+            // All parts of the URL from methodArgs onwards are stored in the $methodArgs array.
             $exploded_url = explode('/', $_SERVER['REQUEST_URI']);
             array_shift($exploded_url);
             $this->class = array_shift($exploded_url);
             $this->method = array_shift($exploded_url);
-            $this->methodArg = array_shift($exploded_url);
+            $this->methodArgs = $exploded_url;
+
+            // Upon route creation (any page loaded) the checkRouteValidity method is run
+            // using the URL arguments taken by the router.
             $this->checkRouteValidity();
         }
 
-        # Returns True if the route is valid.
+        // If the class requested exists, create an instance of it and store it in
+        // the $instance field of the router. Otherwise store a home page instance
+        // by default. This method also updates the router info fields which can be
+        // checked for debugging purposes with the router info method.
         function checkRouteValidity()
         {
             $className = "classes\\" . $this->class;
@@ -40,12 +49,13 @@
             }
             else
             {
-                # Note blank class doesn't exist, but still instantiates the home class.
+                // Note blank class doesn't exist, but still instantiates the home class.
                 $this->class_exists = False;
                 $this->instance = new home();
                 $this->instance_instantiated = True;
             }
 
+            // Update router info field if method exists.
             if (method_exists("classes\\".$this->class, $this->method))
             {
                 $this->method_exists = True;
@@ -56,7 +66,7 @@
             }
         }
 
-        # For debugging purposes, returns the route information in HTML.
+        // For debugging purposes, returns the route information in HTML.
         function info()
         {
             echo "<fieldset>";
@@ -89,9 +99,14 @@
                 echo "<p>Method Exists: " . ($this->method_exists ? 'true' : 'false') . "</p>";
             }
             
-            if (strlen($this->methodArg) > 0)
+            if (isset($this->methodArgs))
             {
-                echo "<p>Method Argument = " . $this->methodArg . "</p>";
+                echo "<p>Method Arguments = | ";
+                foreach ($this->methodArgs as $arg)
+                {
+                    echo $arg . " | ";
+                }
+                echo "</p>";
             }
             else
             {
