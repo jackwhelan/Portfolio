@@ -1,13 +1,10 @@
 <?php
     namespace classes;
 
-    class home
+    class home extends controller
     {
+        var $title = "Home";
+        var $local_view = "views/home.phtml";
         var $view = "views/layout.phtml";
-
-        function renderView()
-        {
-            require_once($this->view);
-        }
     }
 ?>
