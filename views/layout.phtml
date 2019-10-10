@@ -1,10 +1,30 @@
 <!DOCTYPE html>
 <html>
+
     <head>
+    <base href="/" />
         <title><?= $title ?> | <?= $local_title ?></title>
-        <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/core.css" />
     </head>
-        <body>
+
+<body class="d-flex flex-column">
+    <div id="wrapper">
+
+        <main class="container">
             <?php include($local_view); ?>
+        </main>
+    </div>
+
+    <footer id="sticky-footer" class="py-2 bg-dark text-white-50">
+        <div class="container text-center">
+            <small>&copy; Jack Whelan</small>
+        </div>
+    </footer>
+
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/popper.js"></script>
         </body>
+
 </html>
