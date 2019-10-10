@@ -9,6 +9,7 @@
         var $class_exists;
         var $method_exists;
         var $instance;
+        var $instance_instantiated;
 
         function __construct()
         {
@@ -30,12 +31,19 @@
                 $this->class_exists = True;
                 if ($this->class != "router")
                 {
-                    $this->instance = new $className();
+                    if ($this->class != "")
+                    {
+                        $this->instance = new $className();
+                        $this->instance_instantiated = True;
+                    }
                 }
             }
             else
             {
+                # Note blank class doesn't exist, but still instantiates the home class.
                 $this->class_exists = False;
+                $this->instance = new home();
+                $this->instance_instantiated = True;
             }
 
             if (method_exists("classes\\".$this->class, $this->method))
@@ -59,16 +67,12 @@
             }
             else
             {
-                echo "<p>no class</p>";
+                echo "<p>No class specified.</p>";
             }
 
-            if ($this->class_exists)
+            if (strlen($this->class) > 0)
             {
-                echo "<p>Class Exists: yes</p>";
-            }
-            else
-            {
-                echo "<p>Class Exists: no</p>";
+                echo "<p>Class Exists: " . ($this->class_exists ? 'true' : 'false') . "</p>";
             }
 
             if(strlen($this->method) > 0)
@@ -77,16 +81,12 @@
             }
             else
             {
-                echo "<p>no method</p>";
+                echo "<p>No method specified.</p>";
             }
 
-            if ($this->method_exists)
+            if (isset($this->method))
             {
-                echo "<p>Method Exists: yes</p>";
-            }
-            else
-            {
-                echo "<p>Method Exists: no</p>";
+                echo "<p>Method Exists: " . ($this->method_exists ? 'true' : 'false') . "</p>";
             }
             
             if (strlen($this->methodArg) > 0)
@@ -95,8 +95,16 @@
             }
             else
             {
-                echo "<p>no method arguments</p>";
+                echo "<p>No method arguments specified.</p>";
             }
+
+            echo "<p>Instance Instantiated: " . ($this->instance_instantiated ? 'true' : 'false') . "</p>";
+
+            if ($this->instance_instantiated && !$this->class_exists)
+            {
+                echo "Home instantiated because no class was found.";
+            }
+
             echo "</fieldset>";
         }
     }
