@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+    load_balancer:
+        build: load_balancer
+        ports:
+            - "80:80"
+        links:
+            - react
+            - express
+    react:
+        build: frontend
+    express:
+        build: backend
+        links:
+            - redis
+    redis:
+        image: redis:6.2.3-buster
