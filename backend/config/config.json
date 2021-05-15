@@ -1,0 +1,11 @@
+{
+    "DEV": {
+        "PORT": 3000
+    },
+    "PROD": {
+        "PORT": 3000
+    },
+    "TEST": {
+        "DUMMY": "DATA"
+    }
+}
