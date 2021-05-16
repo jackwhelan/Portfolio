@@ -6,6 +6,8 @@ pipeline{
         REPO_NAME='portfolio'
         GITHUB_ORG='jackwhelan'
         GH_TOKEN=credentials('GH_TOKEN')
+        JOB_NAME="${env.JOB_NAME}"
+        BUILD_NUMBER="${env.BUILD_NUMBER}"
     }
     stages{
         stage("Update Commit Status to Pending") {
