@@ -6,7 +6,7 @@ pipeline{
         stage("Update Commit Status to Pending") {
             steps {
                 echo "========Setting Portfolio Commit Status========"
-                sh ".cicd/preCodeReview/set_pending.sh"
+                sh "sudo sh .cicd/preCodeReview/set_pending.sh"
             }
         }
         stage("Build"){
@@ -31,11 +31,11 @@ pipeline{
     post{
         success{
             echo "========Setting Portfolio Commit Status========"
-            sh ".cicd/preCodeReview/set_success.sh"
+            sh "sudo sh .cicd/preCodeReview/set_success.sh"
         }
         failure{
             echo "========Setting Portfolio Commit Status========"
-            sh ".cicd/preCodeReview/set_failure.sh"
+            sh "sudo sh .cicd/preCodeReview/set_failure.sh"
         }
     }
 }
