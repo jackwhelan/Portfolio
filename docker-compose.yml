@@ -12,6 +12,9 @@ services:
     express:
         build: backend
         links:
-            - redis
-    redis:
+            - cache
+            - database
+    cache:
         image: redis:6.2.3-buster
+    database:
+        image: mongo:4.4.6

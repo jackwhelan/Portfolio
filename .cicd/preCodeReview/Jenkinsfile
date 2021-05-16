@@ -1,0 +1,33 @@
+pipeline{
+    agent{
+        label "j-slave"
+    }
+    stages{
+        stage("Build"){
+            steps{
+                echo "========Building Portfolio========"
+                sh "docker compose build"
+            }
+            post{
+                always{
+                    echo "========cleanup========"
+                    sh "docker system prune -a -f"
+                }
+                success{
+                    echo "========Build executed successfully========"
+                }
+                failure{
+                    echo "========Build execution failed========"
+                }
+            }
+        }
+    }
+    post{
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
+        }
+    }
+}
