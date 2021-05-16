@@ -1,9 +1,5 @@
 #!/bin/bash
 
-export REPO_NAME='portfolio'
-export JOB_NAME='portfolio_PreCodeReview'
-export GITHUB_ORG='jackwhelan'
-
 curl "https://api.github.com/repos/$GITHUB_ORG/$REPO_NAME/statuses/$GIT_COMMIT?access_token=$GH_TOKEN" \
 -H "Content-Type: application/json" \
 -X POST \

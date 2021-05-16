@@ -2,11 +2,22 @@ pipeline{
     agent{
         label "j-slave"
     }
+    environment{
+        REPO_NAME='portfolio'
+        GITHUB_ORG='jackwhelan'
+        GH_TOKEN=credentials('GH_TOKEN')
+    }
     stages{
         stage("Update Commit Status to Pending") {
             steps {
                 echo "========Setting Portfolio Commit Status========"
-                sh "sudo sh .cicd/preCodeReview/set_pending.sh"
+                sh "curl https://api.github.com/repos/${GITHUB_ORG}/${REPO_NAME}/statuses/${GIT_COMMIT}?access_token=${GH_TOKEN} \
+                -H accept: application/vnd.github.v3+json \
+                -X POST \
+                -d { \
+                    \"state\": \"pending\", \
+                    \"target_url\": \"http://89.100.10.68:8080/job/${JOB_NAME}/${BUILD_NUMBER}/console\" \
+                }"
             }
         }
         stage("Build"){
@@ -31,11 +42,23 @@ pipeline{
     post{
         success{
             echo "========Setting Portfolio Commit Status========"
-            sh "sudo sh .cicd/preCodeReview/set_success.sh"
+                sh "curl https://api.github.com/repos/${GITHUB_ORG}/${REPO_NAME}/statuses/${GIT_COMMIT}?access_token=${GH_TOKEN} \
+                -H accept: application/vnd.github.v3+json \
+                -X POST \
+                -d { \
+                    \"state\": \"success\", \
+                    \"target_url\": \"http://89.100.10.68:8080/job/${JOB_NAME}/${BUILD_NUMBER}/console\" \
+                }"
         }
         failure{
             echo "========Setting Portfolio Commit Status========"
-            sh "sudo sh .cicd/preCodeReview/set_failure.sh"
+                sh "curl https://api.github.com/repos/${GITHUB_ORG}/${REPO_NAME}/statuses/${GIT_COMMIT}?access_token=${GH_TOKEN} \
+                -H accept: application/vnd.github.v3+json \
+                -X POST \
+                -d { \
+                    \"state\": \"failure\", \
+                    \"target_url\": \"http://89.100.10.68:8080/job/${JOB_NAME}/${BUILD_NUMBER}/console\" \
+                }"
         }
     }
 }
