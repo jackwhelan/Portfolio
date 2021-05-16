@@ -6,12 +6,12 @@ pipeline{
         REPO_NAME='portfolio'
         GITHUB_ORG='jackwhelan'
         GH_TOKEN=credentials('GH_TOKEN')
+        TARGET_URL="http://89.100.10.68:8080/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/console"
     }
     stages{
         stage("Update Commit Status to Pending") {
             steps {
                 echo "========Setting Portfolio Commit Status========"
-                def TARGET_URL="http://89.100.10.68:8080/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/console"
                 sh 'curl https://api.github.com/repos/${GITHUB_ORG}/${REPO_NAME}/statuses/${GIT_COMMIT}?access_token=${GH_TOKEN} \
                 -H Accept:application/vnd.github.v3+json \
                 -X POST \
