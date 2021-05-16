@@ -3,8 +3,14 @@ pipeline{
         label "j-slave"
     }
     stages{
+        stage("Update Commit Status to Pending") {
+            steps {
+                echo "========Setting Portfolio Commit Status========"
+                sh ".cicd/preCodeReview/set_pending.sh"
+            }
+        }
         stage("Build"){
-            steps{
+            steps {
                 echo "========Building Portfolio========"
                 sh "docker-compose build"
             }
@@ -24,10 +30,12 @@ pipeline{
     }
     post{
         success{
-            echo "========pipeline executed successfully ========"
+            echo "========Setting Portfolio Commit Status========"
+            sh ".cicd/preCodeReview/set_success.sh"
         }
         failure{
-            echo "========pipeline execution failed========"
+            echo "========Setting Portfolio Commit Status========"
+            sh ".cicd/preCodeReview/set_failure.sh"
         }
     }
 }
