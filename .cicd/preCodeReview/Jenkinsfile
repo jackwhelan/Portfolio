@@ -6,19 +6,18 @@ pipeline{
         REPO_NAME='portfolio'
         GITHUB_ORG='jackwhelan'
         GH_TOKEN=credentials('GH_TOKEN')
-        JOB_NAME="${env.JOB_NAME}"
-        BUILD_NUMBER="${env.BUILD_NUMBER}"
     }
     stages{
         stage("Update Commit Status to Pending") {
             steps {
                 echo "========Setting Portfolio Commit Status========"
+                def TARGET_URL="http://89.100.10.68:8080/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/console"
                 sh 'curl https://api.github.com/repos/${GITHUB_ORG}/${REPO_NAME}/statuses/${GIT_COMMIT}?access_token=${GH_TOKEN} \
                 -H Accept:application/vnd.github.v3+json \
                 -X POST \
                 -d \'{ \
                     "state": "pending", \
-                    "target_url": "http://89.100.10.68:8080/job/${JOB_NAME}/${BUILD_NUMBER}/console" \
+                    "target_url": "$TARGET_URL" \
                 }\''
             }
         }
@@ -49,7 +48,7 @@ pipeline{
             -X POST \
             -d \'{ \
                 "state": "success", \
-                "target_url": "http://89.100.10.68:8080/job/${JOB_NAME}/${BUILD_NUMBER}/console" \
+                "target_url": "http://89.100.10.68:8080/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/console" \
             }\''
         }
         failure{
@@ -59,7 +58,7 @@ pipeline{
             -X POST \
             -d \'{ \
                 "state": "failure", \
-                "target_url": "http://89.100.10.68:8080/job/${JOB_NAME}/${BUILD_NUMBER}/console" \
+                "target_url": "http://89.100.10.68:8080/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/console" \
             }\''
         }
     }
