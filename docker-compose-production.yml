@@ -3,10 +3,12 @@ services:
     load_balancer:
         build: load_balancer
         ports:
-            - "80:80"
+            - "443:443"
         links:
             - react
             - express
+        volumes:
+            - /home/jack/ssl:/home/jack/ssl
     react:
         build: frontend
     express:

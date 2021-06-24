@@ -16,22 +16,22 @@ class Navigation extends Component {
                     <div className="collapse navbar-collapse" id="navbarScroll">
                         <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
                             <li className="nav-item">
-                                <Link className="nav-link" to="/about-me">About Me</Link>
+                                <Link className="nav-link" to="/about-me"><i class="fas fa-id-card"></i> About Me</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/education">Education</Link>
+                                <Link className="nav-link" to="/education"><i class="fas fa-graduation-cap"></i> Education</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/work-experience">Work Experience</Link>
+                                <Link className="nav-link" to="/work-experience"><i class="fas fa-building"></i> Work Experience</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/technical-expertise">Technical Expertise</Link>
+                                <Link className="nav-link" to="/technical-expertise"><i class="fas fa-laptop-code"></i> Technical Expertise</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/personal-projects">Personal Projects</Link>
+                                <Link className="nav-link" to="/personal-projects"><i class="fab fa-git-square"></i> Personal Projects</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/contact-me">Contact Me</Link>
+                                <Link className="nav-link" to="/contact-me"><i class="fas fa-address-book"></i> Contact Me</Link>
                             </li>
                         </ul>
                     </div>
