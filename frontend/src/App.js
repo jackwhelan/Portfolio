@@ -4,6 +4,7 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
+import AboutMeView from "./views/AboutMe.view";
 import Home from "./views/Home.view";
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
                     <Home />
                 </Route>
                 <Route path="/about-me" exact>
-                    <Home />
+                    <AboutMeView />
                 </Route>
                 <Route path="/education" exact>
                     <Home />
